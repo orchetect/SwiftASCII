@@ -10,6 +10,14 @@ import Foundation
 
 extension String {
 	
+	/// Converts a String to `ASCIIString` exactly.
+	/// Returns nil if `self` is not encodable as ASCII.
+	@inlinable public var asciiString: ASCIIString? {
+		ASCIIString(exactly: self)
+	}
+	
+	/// Converts a String to `ASCIIString` lossily.
+	///
 	/// Performs a lossy conversion, transforming characters to printable ASCII substitutions where necessary.
 	///
 	/// Note that some characters may be transformed to representations that occupy more than one ASCII character. For example: char 189 (½) will be converted to "1/2"
@@ -24,13 +32,37 @@ extension String {
 							   reverse: false)
 		
 		let components =
-			(transformed ?? self)
+			(transformed ?? Self(self))
 			.components(separatedBy: CharacterSet.asciiPrintable.inverted)
 		
 		return ASCIIString(exactly: components.joined(separator: "?"))
 			?? ASCIIString("")
 		
 		
+		
+	}
+	
+}
+
+extension Substring {
+	
+	/// Converts a String to `ASCIIString` exactly.
+	/// Returns nil if `self` is not encodable as ASCII.
+	@inlinable public var asciiString: ASCIIString? {
+		ASCIIString(exactly: String(self))
+	}
+	
+	/// Converts a String to `ASCIIString` lossily.
+	///
+	/// Performs a lossy conversion, transforming characters to printable ASCII substitutions where necessary.
+	///
+	/// Note that some characters may be transformed to representations that occupy more than one ASCII character. For example: char 189 (½) will be converted to "1/2"
+	///
+	/// Where a suitable character substitution can't reasonably be performed, a question-mark "?" will be substituted.
+	@available(OSX 10.11, iOS 9.0, *)
+	public var asciiStringLossy: ASCIIString {
+		
+		String(self).asciiStringLossy
 		
 	}
 	

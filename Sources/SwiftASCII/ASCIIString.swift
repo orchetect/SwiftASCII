@@ -9,7 +9,7 @@
 import Foundation
 
 /// A type containing a String instance that is guaranteed to conform to ASCII encoding.
-public struct ASCIIString: Equatable, Hashable {
+public struct ASCIIString: Hashable {
 	
 	/// The ASCII string returned as a `String`
 	public let stringValue: String
@@ -39,6 +39,23 @@ public struct ASCIIString: Equatable, Hashable {
 		
 	}
 	
+	@inlinable public init(_ lossy: String) {
+		
+		guard lossy.allSatisfy({ $0.isASCII }),
+			  let asciiData = lossy.data(using: .ascii) else {
+			
+			// if ASCII encoding fails, fall back to a default string instead of throwing an exception
+			
+			stringValue = lossy.asciiStringLossy.stringValue
+			rawData = stringValue.data(using: .ascii) ?? Data([])
+			return
+		}
+		
+		stringValue = lossy
+		rawData = asciiData
+		
+	}
+	
 }
 
 extension ASCIIString: ExpressibleByStringLiteral {
@@ -47,18 +64,7 @@ extension ASCIIString: ExpressibleByStringLiteral {
 	
 	@inlinable public init(stringLiteral: String) {
 		
-		guard stringLiteral.allSatisfy({ $0.isASCII }),
-			  let asciiData = stringLiteral.data(using: .ascii) else {
-			
-			// if ASCII encoding fails, fall back to a default string instead of throwing an exception
-			
-			stringValue = stringLiteral.asciiStringLossy.stringValue
-			rawData = stringValue.data(using: .ascii) ?? Data([])
-			return
-		}
-		
-		stringValue = stringLiteral
-		rawData = asciiData
+		self.init(stringLiteral)
 		
 	}
 		
@@ -82,13 +88,11 @@ extension ASCIIString: CustomDebugStringConvertible {
 
 extension ASCIIString: LosslessStringConvertible {
 	
-	public init?(_ description: String) {
-		self.init(exactly: description)
-	}
+	// required init already implemented above
 	
 }
 
-extension ASCIIString {
+extension ASCIIString: Equatable {
 	
 	public static func == <T: StringProtocol>(lhs: Self, rhs: T) -> Bool {
 		lhs.stringValue == rhs
@@ -104,6 +108,25 @@ extension ASCIIString {
 	
 	public static func != <T: StringProtocol>(lhs: T, rhs: Self) -> Bool {
 		lhs != rhs.stringValue
+	}
+	
+}
+
+extension ASCIIString {
+	
+	/// Convenience syntactic sugar
+	public static func exactly(_ source: String) -> ASCIIString? {
+		Self(exactly: source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func exactly(_ source: Data) -> ASCIIString? {
+		Self(exactly: source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func lossy(_ source: String) -> ASCIIString {
+		Self(source)
 	}
 	
 }

@@ -132,6 +132,30 @@ class ASCIICharacterTests: XCTestCase {
 		
 	}
 	
+	func testStaticInits() {
+		
+		let str: ASCIICharacter = .lossy("😃")
+		
+		XCTAssertEqual(str.characterValue, Character("?"))
+		
+		let _: [ASCIICharacter] = [.lossy("A"),
+								   .lossy("A string"),
+								   .lossy(Character("A")),
+								   .exactly(Character("A"))!,
+								   .exactly("A")!,
+								   .exactly(Data([65]))!,
+								   .exactly(65)!]
+		
+		let _: [ASCIICharacter?] = [.lossy("A"),
+									.lossy("A string"),
+									.lossy(Character("A")),
+									.exactly(Character("A"))!,
+									.exactly("A")!,
+									.exactly(Data([65]))!,
+									.exactly(65)!]
+		
+	}
+	
 }
 
 #endif

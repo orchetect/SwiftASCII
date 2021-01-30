@@ -33,6 +33,25 @@ public struct ASCIICharacter: Hashable {
 		
 	}
 	
+	@inlinable public init(_ lossy: Character) {
+		
+		guard let getASCIIValue = lossy.asciiValue else {
+			// if ASCII encoding fails, fall back to a default character instead of throwing an exception
+			
+			var translated = String(lossy).asciiStringLossy
+			if translated.stringValue.isEmpty { translated = "?" }
+			
+			characterValue = Character(translated.stringValue)
+			asciiValue = characterValue.asciiValue ?? 0x3F
+			
+			return
+		}
+		
+		characterValue = lossy
+		asciiValue = getASCIIValue
+		
+	}
+	
 	@inlinable public init?(exactly source: String) {
 		
 		guard source.count == 1,
@@ -47,7 +66,14 @@ public struct ASCIICharacter: Hashable {
 		asciiValue = getASCIIValue
 		
 	}
-
+	
+	@inlinable public init(_ lossy: String) {
+		
+		let char: Character = lossy.first ?? "?"
+		
+		self.init(char)
+		
+	}
 	
 	@inlinable public init?(exactly source: Data) {
 		
@@ -82,20 +108,7 @@ extension ASCIICharacter: ExpressibleByExtendedGraphemeClusterLiteral {
 	
 	public init(extendedGraphemeClusterLiteral value: Character) {
 		
-		guard let getASCIIValue = value.asciiValue else {
-			// if ASCII encoding fails, fall back to a default character instead of throwing an exception
-			
-			var translated = String(value).asciiStringLossy
-			if translated.stringValue.isEmpty { translated = "?" }
-			
-			characterValue = Character(translated.stringValue)
-			asciiValue = characterValue.asciiValue ?? 0x3F
-			
-			return
-		}
-		
-		characterValue = value
-		asciiValue = getASCIIValue
+		self.init(value)
 		
 	}
 	
@@ -153,6 +166,40 @@ extension ASCIICharacter: Equatable {
 	
 	public static func != (lhs: Character, rhs: Self) -> Bool {
 		lhs != rhs.characterValue
+	}
+	
+}
+
+extension ASCIICharacter {
+	
+	/// Convenience syntactic sugar
+	public static func exactly(_ source: Character) -> ASCIICharacter? {
+		Self(exactly: source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func lossy(_ source: Character) -> ASCIICharacter {
+		Self(source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func exactly(_ source: String) -> ASCIICharacter? {
+		Self(exactly: source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func lossy(_ source: String) -> ASCIICharacter {
+		Self(source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func exactly(_ source: Data) -> ASCIICharacter? {
+		Self(exactly: source)
+	}
+	
+	/// Convenience syntactic sugar
+	public static func exactly<T: BinaryInteger>(_ value: T) -> ASCIICharacter? {
+		Self(value)
 	}
 	
 }

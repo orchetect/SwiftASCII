@@ -46,6 +46,19 @@ class ASCIIStringTests: XCTestCase {
 		
 	}
 	
+	func testInit_StringVariable() {
+		
+		let str1 = ""
+		XCTAssertEqual(ASCIIString(str1).stringValue, "" as String)
+		
+		let str2 = "A string"
+		XCTAssertEqual(ASCIIString(str2).stringValue, "A string" as String)
+		
+		let str3 = "Emöji 😃"
+		XCTAssertEqual(ASCIIString(str3).stringValue, "Emoji ?" as String)
+		
+	}
+	
 	func testInit_stringLiteral() {
 		
 		// init(stringLiteral:)
@@ -83,6 +96,22 @@ class ASCIIStringTests: XCTestCase {
 		
 		XCTAssertTrue("A string" as String == ASCIIString("A string"))
 		XCTAssertFalse("A string" as String != ASCIIString("A string"))
+		
+	}
+	
+	func testStaticInits() {
+		
+		let str: ASCIIString = .lossy("Emöji 😃")
+		
+		XCTAssertEqual(str.stringValue, "Emoji ?" as String)
+		
+		let _: [ASCIIString] = [.lossy("A string"),
+								.exactly("")!,
+								.exactly(Data([65]))!]
+		
+		let _: [ASCIIString?] = [.lossy("A string"),
+								 .exactly("")!,
+								 .exactly(Data([65]))!]
 		
 	}
 	

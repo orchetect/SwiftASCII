@@ -16,6 +16,24 @@ class StringTests: XCTestCase {
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
 	
+	func testString_asciiString() {
+		
+		// String
+		
+		XCTAssertEqual("An ASCII String.".asciiString?.stringValue,
+					   "An ASCII String.")
+		
+		XCTAssertNil("Ãñ ÂŚÇÏÎ Strïńg.".asciiString)
+		
+		// Substring
+		
+		XCTAssertEqual(Substring("An ASCII String.").asciiString?.stringValue,
+					   "An ASCII String.")
+		
+		XCTAssertNil(Substring("Ãñ ÂŚÇÏÎ Strïńg.").asciiString)
+		
+	}
+	
 	func testString_asciiStringLossy() {
 		
 		// printable ASCII chars - ensure they are kept intact and not translated
