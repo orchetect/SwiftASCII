@@ -3,12 +3,13 @@
 //  SwiftASCII
 //
 //  Created by Steffan Andrews on 2021-01-29.
+//  Copyright © 2021 Steffan Andrews. All rights reserved.
 //
 
 #if !os(watchOS)
 
 import XCTest
-@testable import ASCIIString
+@testable import SwiftASCII
 
 class StringTests: XCTestCase {
 	
