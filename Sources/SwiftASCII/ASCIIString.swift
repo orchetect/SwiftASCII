@@ -12,10 +12,10 @@ import Foundation
 public struct ASCIIString: Equatable, Hashable {
 	
 	/// The ASCII string returned as a `String`
-	@usableFromInline let stringValue: String
+	public let stringValue: String
 	
 	/// The ASCII string encoded as raw Data
-	@usableFromInline let rawData: Data
+	public let rawData: Data
 	
 	@inlinable public init?(exactly source: String) {
 		

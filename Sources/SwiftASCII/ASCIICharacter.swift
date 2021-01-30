@@ -12,13 +12,13 @@ import Foundation
 public struct ASCIICharacter: Hashable {
 	
 	/// The ASCII character returned as a `Character`
-	@usableFromInline let characterValue: Character
+	public let characterValue: Character
 	
 	/// The ASCII encoding value of this character
-	@usableFromInline let asciiValue: UInt8
+	public let asciiValue: UInt8
 	
 	/// The ASCII character encoded as raw Data
-	@usableFromInline var rawData: Data {
+	public var rawData: Data {
 		Data([asciiValue])
 	}
 	

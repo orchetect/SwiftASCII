@@ -9,7 +9,7 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import SwiftASCII
+import SwiftASCII
 
 class ASCIICharacterTests: XCTestCase {
 	
