@@ -1,21 +1,6 @@
 # SwiftASCII
 
-<p>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/Swift%205.3-compatible-orange.svg?style=flat"
-	 alt="Swift 5.3 compatible" /></a>
-<a href="#installation">
-<img src="https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat"
-	 alt="Swift Package Manager (SPM) compatible" /></a>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/platform-macOS%2010.12%20|%20iOS%209%20|%20tvOS%20|%20watchOS%20-green.svg?style=flat"
-	 alt="Platform - macOS 10.11 | iOS 9 | tvOS | watchOS" /></a>
-<a href="#contributions">
-<img src="https://img.shields.io/badge/Linux-not%20tested-black.svg?style=flat"
-	 alt="Linux - not tested" /></a>
-<a href="https://github.com/orchetect/SwiftASCII/blob/main/LICENSE">
-<img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat"
-	 alt="License: MIT" /></a>
+[![CI Build Status](https://github.com/orchetect/SwiftASCII/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/SwiftASCII/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS | watchOS](https://img.shields.io/badge/platforms-macOS%20|%20iOS%20|%20tvOS%20|%20watchOS%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftASCII/blob/main/LICENSE)
 
 Type-safe `ASCIIString` and `ASCIICharacter` types for Swift.
 
@@ -25,10 +10,10 @@ Complete unit test coverage.
 
 ### Swift Package Manager (SPM)
 
-To add ASCIIString to your Xcode project:
+To add SwiftASCII to your Xcode project:
 
 1. Select File → Swift Packages → Add Package Dependency
-2. Add package using  `https://github.com/orchetect/ASCIIString` as the URL.
+2. Add package using  `https://github.com/orchetect/SwiftASCII` as the URL.
 
 ## Getting Started
 
