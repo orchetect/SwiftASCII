@@ -16,7 +16,9 @@ public struct ASCIICharacter: Hashable {
     
     /// The ASCII character encoded as raw Data
     public var rawData: Data {
+        
         Data([asciiValue])
+        
     }
     
     @inlinable public init?(exactly source: Character) {
