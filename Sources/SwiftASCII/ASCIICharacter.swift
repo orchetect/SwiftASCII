@@ -188,6 +188,28 @@ extension ASCIICharacter: Equatable {
 
 extension ASCIICharacter {
     
+    public static func + (lhs: ASCIICharacter, rhs: ASCIICharacter) -> ASCIIString {
+        
+        ASCIIString([lhs, rhs])
+        
+    }
+    
+    public static func + (lhs: ASCIICharacter, rhs: ASCIIString) -> ASCIIString {
+        
+        ASCIIString(lhs) + rhs
+        
+    }
+    
+    public static func + (lhs: ASCIIString, rhs: ASCIICharacter) -> ASCIIString {
+        
+        lhs + ASCIIString(rhs)
+        
+    }
+    
+}
+
+extension ASCIICharacter {
+    
     /// Convenience: initialize a `ASCIICharacter` instance.
     public static func exactly(_ source: Character) -> ASCIICharacter? {
         Self(exactly: source)

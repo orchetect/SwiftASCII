@@ -112,6 +112,13 @@ class ASCIIStringTests: XCTestCase {
         
     }
     
+    func testInterpolation() {
+        
+        XCTAssertEqual(ASCIIString("AB") + ASCIIString("CD"),
+                       ASCIIString("ABCD"))
+        
+    }
+    
 }
 
 #endif

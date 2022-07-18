@@ -63,6 +63,32 @@ public struct ASCIIString: Hashable {
         
     }
     
+    /// Returns a new `ASCIIString` instance from a `ASCIICharacter` sequence.
+    @inlinable
+    public init<S>(_ characters: S) where S : Sequence, S.Element == ASCIICharacter {
+        
+        self.stringValue = String(characters.map { $0.characterValue })
+        self.rawData = Data(characters.map { $0.asciiValue })
+        
+    }
+    
+    /// Returns a new `ASCIIString` instance by concatenating a `ASCIIString` sequence.
+    @inlinable
+    public init<S>(_ substrings: S) where S : Sequence, S.Element == ASCIIString {
+        
+        self.stringValue = substrings.map { $0.stringValue }.joined()
+        self.rawData = Data(substrings.map { $0.rawData }.joined())
+        
+    }
+    
+    @inlinable
+    public init(_ character: ASCIICharacter) {
+        
+        self.stringValue = "\(character.characterValue)"
+        self.rawData = character.rawData
+        
+    }
+    
 }
 
 extension ASCIIString: ExpressibleByStringLiteral {
@@ -116,6 +142,16 @@ extension ASCIIString: Equatable {
     
     public static func != <T: StringProtocol>(lhs: T, rhs: Self) -> Bool {
         lhs != rhs.stringValue
+    }
+    
+}
+
+extension ASCIIString {
+    
+    public static func + (lhs: ASCIIString, rhs: ASCIIString) -> ASCIIString {
+        
+        ASCIIString([lhs, rhs])
+        
     }
     
 }
