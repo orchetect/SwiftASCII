@@ -3,7 +3,7 @@
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import SwiftASCII
