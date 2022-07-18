@@ -13,6 +13,13 @@ class StringTests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
+    func testString_init_asciiString() {
+        
+        XCTAssertEqual(String(ASCIIString("An ASCII String.")),
+                       "An ASCII String.")
+        
+    }
+    
     func testString_asciiString() {
         
         // String
