@@ -107,8 +107,8 @@ class ASCIIStringTests: XCTestCase {
                                 .exactly(Data([65]))!]
         
         let _: [ASCIIString?] = [.lossy("A string"),
-                                 .exactly("")!,
-                                 .exactly(Data([65]))!]
+                                 .exactly(""),
+                                 .exactly(Data([65]))]
         
     }
     

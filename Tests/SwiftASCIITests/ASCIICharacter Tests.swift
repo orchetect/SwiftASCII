@@ -146,10 +146,10 @@ class ASCIICharacterTests: XCTestCase {
         let _: [ASCIICharacter?] = [.lossy("A"),
                                     .lossy("A string"),
                                     .lossy(Character("A")),
-                                    .exactly(Character("A"))!,
-                                    .exactly("A")!,
-                                    .exactly(Data([65]))!,
-                                    .exactly(65)!]
+                                    .exactly(Character("A")),
+                                    .exactly("A"),
+                                    .exactly(Data([65])),
+                                    .exactly(65)]
         
     }
     
