@@ -5,7 +5,9 @@
 
 import Foundation
 
-/// A type containing a Character instance that is guaranteed to conform to ASCII encoding.
+/// ASCII Character:
+/// A type containing a `Character` instance that is guaranteed to conform to ASCII encoding.
+/// Offers a validating `exactly: Character` failable initializer and a `_ lossy: Character` conversion initializer.
 public struct ASCIICharacter: Hashable {
     
     /// The ASCII character returned as a `Character`
@@ -21,18 +23,22 @@ public struct ASCIICharacter: Hashable {
         
     }
     
-    @inlinable public init?(exactly source: Character) {
+    /// Returns a new `ASCIICharacter` instance if the source character is a valid ASCII character.
+    @inlinable
+    public init?(exactly source: Character) {
         
         guard let getASCIIValue = source.asciiValue else {
             return nil
         }
         
-        characterValue = source
-        asciiValue = getASCIIValue
+        self.characterValue = source
+        self.asciiValue = getASCIIValue
         
     }
     
-    @inlinable public init(_ lossy: Character) {
+    /// Returns a new `ASCIICharacter` instance from the source character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
+    @inlinable
+    public init(_ lossy: Character) {
         
         guard let getASCIIValue = lossy.asciiValue else {
             // if ASCII encoding fails, fall back to a default character instead of throwing an exception
@@ -40,18 +46,21 @@ public struct ASCIICharacter: Hashable {
             var translated = String(lossy).asciiStringLossy
             if translated.stringValue.isEmpty { translated = "?" }
             
-            characterValue = Character(translated.stringValue)
-            asciiValue = characterValue.asciiValue ?? 0x3F
+            self.characterValue = Character(translated.stringValue)
+            self.asciiValue = characterValue.asciiValue ?? 0x3F
             
             return
         }
         
-        characterValue = lossy
-        asciiValue = getASCIIValue
+        self.characterValue = lossy
+        self.asciiValue = getASCIIValue
         
     }
     
-    @inlinable public init?(exactly source: String) {
+    /// Returns a new `ASCIICharacter` instance if the source string contains a single character and the character is a valid ASCII character.
+    @_disfavoredOverload
+    @inlinable
+    public init?(exactly source: String) {
         
         guard source.count == 1,
               let char = source.first
@@ -61,12 +70,14 @@ public struct ASCIICharacter: Hashable {
             return nil
         }
         
-        characterValue = char
-        asciiValue = getASCIIValue
+        self.characterValue = char
+        self.asciiValue = getASCIIValue
         
     }
     
-    @inlinable public init(_ lossy: String) {
+    /// Returns a new `ASCIICharacter` instance if the source string contains a single character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
+    @inlinable
+    public init(_ lossy: String) {
         
         let char: Character = lossy.first ?? "?"
         
@@ -74,7 +85,10 @@ public struct ASCIICharacter: Hashable {
         
     }
     
-    @inlinable public init?(exactly source: Data) {
+    /// Returns a new `ASCIICharacter` instance if the source data is a single ASCII character.
+    /// Returns `nil` if the source data is not a single byte or if it contains a non-ASCII character byte.
+    @inlinable
+    public init?(exactly source: Data) {
         
         guard source.count == 1 else { return nil }
         
@@ -86,12 +100,15 @@ public struct ASCIICharacter: Hashable {
             return nil
         }
         
-        characterValue = Character(scalar)
-        asciiValue = UInt8(ascii: scalar)
+        self.characterValue = Character(scalar)
+        self.asciiValue = UInt8(ascii: scalar)
         
     }
     
-    @inlinable public init?<T: BinaryInteger>(_ asciiValue: T) {
+    /// Returns a new `ASCIICharacter` instance from an ASCII character number.
+    /// Returns `nil` if the number is not within the valid ASCII table (0..<128).
+    @inlinable
+    public init?<T: BinaryInteger>(_ asciiValue: T) {
         
         guard let getASCIIValue = UInt8(exactly: asciiValue) else { return nil }
         
@@ -171,32 +188,32 @@ extension ASCIICharacter: Equatable {
 
 extension ASCIICharacter {
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func exactly(_ source: Character) -> ASCIICharacter? {
         Self(exactly: source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func lossy(_ source: Character) -> ASCIICharacter {
         Self(source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func exactly(_ source: String) -> ASCIICharacter? {
         Self(exactly: source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func lossy(_ source: String) -> ASCIICharacter {
         Self(source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func exactly(_ source: Data) -> ASCIICharacter? {
         Self(exactly: source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIICharacter` instance.
     public static func exactly<T: BinaryInteger>(_ value: T) -> ASCIICharacter? {
         Self(value)
     }

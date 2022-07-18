@@ -8,8 +8,9 @@ import Foundation
 extension String {
     
     /// Converts a String to `ASCIIString` exactly.
-    /// Returns nil if `self` is not encodable as ASCII.
-    @inlinable public var asciiString: ASCIIString? {
+    /// Returns `nil` if `self` is not encodable as ASCII.
+    @inlinable
+    public var asciiString: ASCIIString? {
         
         ASCIIString(exactly: self)
         
@@ -43,7 +44,8 @@ extension Substring {
     
     /// Converts a String to `ASCIIString` exactly.
     /// Returns nil if `self` is not encodable as ASCII.
-    @inlinable public var asciiString: ASCIIString? {
+    @inlinable
+    public var asciiString: ASCIIString? {
         
         ASCIIString(exactly: String(self))
         
