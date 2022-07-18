@@ -7,6 +7,14 @@ import Foundation
 
 extension String {
     
+    /// Initialize from an `ASCIIString` instance.
+    @inlinable
+    public init(_ asciiString: ASCIIString) {
+        
+        self = asciiString.stringValue
+        
+    }
+    
     /// Converts a String to `ASCIIString` exactly.
     /// Returns `nil` if `self` is not encodable as ASCII.
     @inlinable
