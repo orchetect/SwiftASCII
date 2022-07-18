@@ -5,7 +5,9 @@
 
 import Foundation
 
-/// A type containing a String instance that is guaranteed to conform to ASCII encoding.
+/// ASCII String:
+/// A type containing a `String` instance that is guaranteed to conform to ASCII encoding.
+/// Offers a validating `exactly: String` failable initializer and a `_ lossy: String` conversion initializer.
 public struct ASCIIString: Hashable {
     
     /// The ASCII string returned as a `String`
@@ -14,42 +16,76 @@ public struct ASCIIString: Hashable {
     /// The ASCII string encoded as raw Data
     public let rawData: Data
     
-    @inlinable public init?(exactly source: String) {
+    /// Returns a new `ASCIIString` instance if the source string is an ASCII string verbatim.
+    /// Returns `nil` if the source string contains any non-ASCII characters.
+    @inlinable
+    public init?(exactly source: String) {
         
         guard source.allSatisfy({ $0.isASCII }),
               let asciiData = source.data(using: .ascii)
         else { return nil }
         
-        stringValue = source
-        rawData = asciiData
+        self.stringValue = source
+        self.rawData = asciiData
         
     }
     
-    @inlinable public init?(exactly source: Data) {
+    /// Returns a new `ASCIIString` instance if the source data contains an ASCII string verbatim.
+    /// Returns `nil` if the source data contains any non-ASCII character bytes.
+    @inlinable
+    public init?(exactly source: Data) {
         
         guard let string = String(data: source, encoding: .nonLossyASCII),
               string.allSatisfy({ $0.isASCII })
         else { return nil }
         
-        stringValue = string
-        rawData = source
+        self.stringValue = string
+        self.rawData = source
         
     }
     
-    @inlinable public init(_ lossy: String) {
+    /// Returns a new `ASCIIString` instance from the source string, removing or converting any non-ASCII characters if necessary.
+    @inlinable
+    public init(_ lossy: String) {
         
         guard lossy.allSatisfy({ $0.isASCII }),
               let asciiData = lossy.data(using: .ascii) else {
             
             // if ASCII encoding fails, fall back to a default string instead of throwing an exception
             
-            stringValue = lossy.asciiStringLossy.stringValue
-            rawData = stringValue.data(using: .ascii) ?? Data([])
+            self.stringValue = lossy.asciiStringLossy.stringValue
+            self.rawData = stringValue.data(using: .ascii) ?? Data([])
             return
         }
         
-        stringValue = lossy
-        rawData = asciiData
+        self.stringValue = lossy
+        self.rawData = asciiData
+        
+    }
+    
+    /// Returns a new `ASCIIString` instance from a `ASCIICharacter` sequence.
+    @inlinable
+    public init<S>(_ characters: S) where S : Sequence, S.Element == ASCIICharacter {
+        
+        self.stringValue = String(characters.map { $0.characterValue })
+        self.rawData = Data(characters.map { $0.asciiValue })
+        
+    }
+    
+    /// Returns a new `ASCIIString` instance by concatenating a `ASCIIString` sequence.
+    @inlinable
+    public init<S>(_ substrings: S) where S : Sequence, S.Element == ASCIIString {
+        
+        self.stringValue = substrings.map { $0.stringValue }.joined()
+        self.rawData = Data(substrings.map { $0.rawData }.joined())
+        
+    }
+    
+    @inlinable
+    public init(_ character: ASCIICharacter) {
+        
+        self.stringValue = "\(character.characterValue)"
+        self.rawData = character.rawData
         
     }
     
@@ -59,7 +95,8 @@ extension ASCIIString: ExpressibleByStringLiteral {
     
     public typealias StringLiteralType = String
     
-    @inlinable public init(stringLiteral: String) {
+    @inlinable
+    public init(stringLiteral: String) {
         
         self.init(stringLiteral)
         
@@ -111,17 +148,27 @@ extension ASCIIString: Equatable {
 
 extension ASCIIString {
     
-    /// Convenience syntactic sugar
+    public static func + (lhs: ASCIIString, rhs: ASCIIString) -> ASCIIString {
+        
+        ASCIIString([lhs, rhs])
+        
+    }
+    
+}
+
+extension ASCIIString {
+    
+    /// Convenience: initialize a `ASCIIString` instance.
     public static func exactly(_ source: String) -> ASCIIString? {
         Self(exactly: source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIIString` instance.
     public static func exactly(_ source: Data) -> ASCIIString? {
         Self(exactly: source)
     }
     
-    /// Convenience syntactic sugar
+    /// Convenience: initialize a `ASCIIString` instance.
     public static func lossy(_ source: String) -> ASCIIString {
         Self(source)
     }

@@ -3,7 +3,7 @@
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import SwiftASCII
@@ -12,6 +12,13 @@ class StringTests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
+    
+    func testString_init_asciiString() {
+        
+        XCTAssertEqual(String(ASCIIString("An ASCII String.")),
+                       "An ASCII String.")
+        
+    }
     
     func testString_asciiString() {
         

@@ -7,10 +7,21 @@ import Foundation
 
 extension String {
     
+    /// Initialize from an `ASCIIString` instance.
+    @inlinable
+    public init(_ asciiString: ASCIIString) {
+        
+        self = asciiString.stringValue
+        
+    }
+    
     /// Converts a String to `ASCIIString` exactly.
-    /// Returns nil if `self` is not encodable as ASCII.
-    @inlinable public var asciiString: ASCIIString? {
+    /// Returns `nil` if `self` is not encodable as ASCII.
+    @inlinable
+    public var asciiString: ASCIIString? {
+        
         ASCIIString(exactly: self)
+        
     }
     
     /// Converts a String to `ASCIIString` lossily.
@@ -23,19 +34,15 @@ extension String {
     @available(OSX 10.11, iOS 9.0, *)
     public var asciiStringLossy: ASCIIString {
         
-        let transformed =
-            self
+        let transformed = self
             .applyingTransform(StringTransform("Latin-ASCII"),
                                reverse: false)
         
-        let components =
-            (transformed ?? Self(self))
+        let components = (transformed ?? Self(self))
             .components(separatedBy: CharacterSet.asciiPrintable.inverted)
         
         return ASCIIString(exactly: components.joined(separator: "?"))
             ?? ASCIIString("")
-        
-        
         
     }
     
@@ -45,8 +52,11 @@ extension Substring {
     
     /// Converts a String to `ASCIIString` exactly.
     /// Returns nil if `self` is not encodable as ASCII.
-    @inlinable public var asciiString: ASCIIString? {
+    @inlinable
+    public var asciiString: ASCIIString? {
+        
         ASCIIString(exactly: String(self))
+        
     }
     
     /// Converts a String to `ASCIIString` lossily.

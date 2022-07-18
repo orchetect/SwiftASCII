@@ -3,7 +3,7 @@
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import SwiftASCII
@@ -109,6 +109,13 @@ class ASCIIStringTests: XCTestCase {
         let _: [ASCIIString?] = [.lossy("A string"),
                                  .exactly("")!,
                                  .exactly(Data([65]))!]
+        
+    }
+    
+    func testInterpolation() {
+        
+        XCTAssertEqual(ASCIIString("AB") + ASCIIString("CD"),
+                       ASCIIString("ABCD"))
         
     }
     
