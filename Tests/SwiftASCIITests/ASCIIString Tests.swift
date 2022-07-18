@@ -119,6 +119,25 @@ class ASCIIStringTests: XCTestCase {
         
     }
     
+    func testJoined() {
+        
+        XCTAssertEqual(
+            [ASCIIString("AB"), ASCIIString("CD")].joined(),
+            ASCIIString("ABCD")
+        )
+        
+        XCTAssertEqual(
+            [ASCIIString("AB"), ASCIIString("CD")].joined(separator: "_"),
+            ASCIIString("AB_CD")
+        )
+        
+        XCTAssertEqual(
+            [ASCIIString("AB"), ASCIIString("CD")].joined(separator: "123"),
+            ASCIIString("AB123CD")
+        )
+        
+    }
+    
 }
 
 #endif

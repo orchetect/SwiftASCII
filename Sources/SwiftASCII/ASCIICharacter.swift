@@ -241,3 +241,23 @@ extension ASCIICharacter {
     }
     
 }
+
+extension Sequence where Element == ASCIICharacter {
+    
+    /// Returns a new string by concatenating the elements of the sequence.
+    public func joined() -> ASCIIString {
+        
+        ASCIIString(self)
+        
+    }
+    
+    /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
+    public func joined(separator: ASCIIString) -> ASCIIString {
+        
+        let joinedStr = map { "\($0.characterValue)" }.joined(separator: separator.stringValue)
+        let joinedData = Data(map { $0.rawData }.joined(separator: separator.rawData))
+        return ASCIIString(guaranteedASCII: joinedStr, rawData: joinedData)
+        
+    }
+    
+}

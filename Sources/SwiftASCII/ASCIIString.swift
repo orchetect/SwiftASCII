@@ -81,6 +81,7 @@ public struct ASCIIString: Hashable {
         
     }
     
+    /// Returns a new `ASCIIString` instance from an `ASCIICharacter`.
     @inlinable
     public init(_ character: ASCIICharacter) {
         
@@ -171,6 +172,43 @@ extension ASCIIString {
     /// Convenience: initialize a `ASCIIString` instance.
     public static func lossy(_ source: String) -> ASCIIString {
         Self(source)
+    }
+    
+}
+
+extension Sequence where Element == ASCIIString {
+    
+    /// Returns a new string by concatenating the elements of the sequence.
+    public func joined() -> ASCIIString {
+        
+        let joinedStr = map { $0.stringValue }.joined()
+        let joinedData = Data(map { $0.rawData }.joined())
+        return ASCIIString(guaranteedASCII: joinedStr, rawData: joinedData)
+        
+    }
+    
+    /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
+    public func joined(separator: ASCIIString) -> ASCIIString {
+        
+        let joinedStr = map { $0.stringValue }.joined(separator: separator.stringValue)
+        let joinedData = Data(map { $0.rawData }.joined(separator: separator.rawData))
+        return ASCIIString(guaranteedASCII: joinedStr, rawData: joinedData)
+        
+    }
+    
+}
+
+// MARK: - Internal Utility
+
+extension ASCIIString {
+    
+    /// Internal use only.
+    /// Used when string and data are already known to be valid ASCII.
+    internal init(guaranteedASCII string: String, rawData: Data) {
+        
+        self.stringValue = string
+        self.rawData = rawData
+        
     }
     
 }
