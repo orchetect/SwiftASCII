@@ -6,20 +6,28 @@ Type-safe `ASCIIString` and `ASCIICharacter` types for Swift.
 
 Complete unit test coverage.
 
-## Installation
+## Getting Started
 
 ### Swift Package Manager (SPM)
 
-To add SwiftASCII to your Xcode project:
+1. Add SwiftASCII as a dependency using Swift Package Manager.
 
-1. Select File → Swift Packages → Add Package Dependency
-2. Add package using  `https://github.com/orchetect/SwiftASCII` as the URL.
+   - In an app project or framework, in Xcode:
 
-## Getting Started
+     - Select the menu: **File → Swift Packages → Add Package Dependency...**
+     - Enter this URL: `https://github.com/orchetect/SwiftASCII`
 
-```swift
-import SwiftASCII
-```
+   - In a Swift Package, add it to the Package.swift dependencies:
+
+     ```swift
+     .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.0")
+     ```
+
+2. Import the library:
+
+   ```swift
+   import SwiftASCII
+   ```
 
 ### ASCIIString
 
