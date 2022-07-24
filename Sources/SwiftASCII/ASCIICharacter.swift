@@ -188,17 +188,11 @@ extension ASCIICharacter: Equatable {
 
 extension ASCIICharacter: Codable {
     
-    enum CodingKeys: String, CodingKey {
-        
-        case asciiValue
-        
-    }
-    
     public init(from decoder: Decoder) throws {
         
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let asciiValue = try container.decode(UInt8.self, forKey: .asciiValue)
-        guard let newInstance = Self(asciiValue) else {
+        let container = try decoder.singleValueContainer()
+        let string = try container.decode(String.self)
+        guard let newInstance = Self(exactly: string) else {
             throw DecodingError.dataCorrupted(
                 .init(codingPath: container.codingPath,
                       debugDescription: "Value was not valid ASCII character number.")
@@ -210,9 +204,9 @@ extension ASCIICharacter: Codable {
     
     public func encode(to encoder: Encoder) throws {
         
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.singleValueContainer()
         
-        try container.encode(asciiValue, forKey: .asciiValue)
+        try container.encode(String(characterValue))
         
     }
     
