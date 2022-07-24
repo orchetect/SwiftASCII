@@ -129,6 +129,20 @@ class ASCIICharacterTests: XCTestCase {
         
     }
     
+    func testCodable() throws {
+        
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        
+        let str = ASCIICharacter("A")
+        
+        let encoded = try encoder.encode(str)
+        let decoded = try decoder.decode(ASCIICharacter.self, from: encoded)
+        
+        XCTAssertEqual(str, decoded)
+        
+    }
+    
     func testStaticInits() {
         
         let str: ASCIICharacter = .lossy("😃")

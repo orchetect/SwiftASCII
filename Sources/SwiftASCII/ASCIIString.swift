@@ -147,6 +147,31 @@ extension ASCIIString: Equatable {
     
 }
 
+extension ASCIIString: Codable {
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.singleValueContainer()
+        let stringValue = try container.decode(String.self)
+        guard let newInstance = Self(exactly: stringValue) else {
+            throw DecodingError.dataCorrupted(
+                .init(codingPath: container.codingPath,
+                      debugDescription: "Encoded string is not a valid ASCII string.")
+            )
+        }
+        self = newInstance
+        
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.singleValueContainer()
+        try container.encode(stringValue)
+        
+    }
+    
+}
+
 extension ASCIIString {
     
     public static func + (lhs: ASCIIString, rhs: ASCIIString) -> ASCIIString {
