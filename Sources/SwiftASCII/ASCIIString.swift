@@ -171,6 +171,7 @@ extension ASCIIString {
 
 extension Sequence where Element == ASCIIString {
     /// Returns a new string by concatenating the elements of the sequence.
+    @_disfavoredOverload
     public func joined() -> ASCIIString {
         let joinedStr = map { $0.stringValue }.joined()
         let joinedData = Data(map { $0.rawData }.joined())
@@ -179,6 +180,7 @@ extension Sequence where Element == ASCIIString {
     }
     
     /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
+    @_disfavoredOverload
     public func joined(separator: ASCIIString) -> ASCIIString {
         let joinedStr = map { $0.stringValue }
             .joined(separator: separator.stringValue)

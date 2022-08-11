@@ -228,6 +228,7 @@ extension ASCIICharacter {
 
 extension Sequence where Element == ASCIICharacter {
     /// Returns a new string by concatenating the elements of the sequence.
+    @_disfavoredOverload
     public func joined() -> ASCIIString {
         ASCIIString(self)
     }

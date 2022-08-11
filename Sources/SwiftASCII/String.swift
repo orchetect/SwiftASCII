@@ -28,7 +28,7 @@ extension StringProtocol {
 extension StringProtocol {
     /// Converts a string to `ASCIIString` exactly.
     /// Returns `nil` if `self` is not encodable as ASCII.
-    @inlinable
+    @inlinable @_disfavoredOverload
     public var asciiString: ASCIIString? {
         ASCIIString(exactly: self)
     }
