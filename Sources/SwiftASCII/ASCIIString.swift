@@ -23,8 +23,8 @@ public struct ASCIIString: Hashable {
               let asciiData = source.data(using: .ascii)
         else { return nil }
         
-        self.stringValue = String(source)
-        self.rawData = asciiData
+        stringValue = String(source)
+        rawData = asciiData
     }
     
     /// Returns a new `ASCIIString` instance if the source data contains an ASCII string verbatim.
@@ -35,8 +35,8 @@ public struct ASCIIString: Hashable {
               string.allSatisfy({ $0.isASCII })
         else { return nil }
         
-        self.stringValue = string
-        self.rawData = source
+        stringValue = string
+        rawData = source
     }
     
     /// Returns a new `ASCIIString` instance from the source string, removing or converting any non-ASCII characters if necessary.
@@ -47,38 +47,38 @@ public struct ASCIIString: Hashable {
         else {
             // if ASCII encoding fails, fall back to a default string instead of throwing an exception
             
-            self.stringValue = lossy.asciiStringLossy.stringValue
-            self.rawData = stringValue.data(using: .ascii) ?? Data([])
+            stringValue = lossy.asciiStringLossy.stringValue
+            rawData = stringValue.data(using: .ascii) ?? Data([])
             return
         }
         
-        self.stringValue = String(lossy)
-        self.rawData = asciiData
+        stringValue = String(lossy)
+        rawData = asciiData
     }
     
     /// Returns a new `ASCIIString` instance from a `ASCIICharacter` sequence.
     @inlinable
     public init<S>(_ characters: S)
-    where S: Sequence, S.Element == ASCIICharacter
+        where S: Sequence, S.Element == ASCIICharacter
     {
-        self.stringValue = String(characters.map { $0.characterValue })
-        self.rawData = Data(characters.map { $0.asciiValue })
+        stringValue = String(characters.map { $0.characterValue })
+        rawData = Data(characters.map { $0.asciiValue })
     }
     
     /// Returns a new `ASCIIString` instance by concatenating a `ASCIIString` sequence.
     @inlinable
     public init<S>(_ substrings: S)
-    where S: Sequence, S.Element == ASCIIString
+        where S: Sequence, S.Element == ASCIIString
     {
-        self.stringValue = substrings.map { $0.stringValue }.joined()
-        self.rawData = Data(substrings.map { $0.rawData }.joined())
+        stringValue = substrings.map { $0.stringValue }.joined()
+        rawData = Data(substrings.map { $0.rawData }.joined())
     }
     
     /// Returns a new `ASCIIString` instance from an `ASCIICharacter`.
     @inlinable
     public init(_ character: ASCIICharacter) {
-        self.stringValue = "\(character.characterValue)"
-        self.rawData = character.rawData
+        stringValue = "\(character.characterValue)"
+        rawData = character.rawData
     }
 }
 
@@ -175,8 +175,10 @@ extension Sequence where Element == ASCIIString {
     public func joined() -> ASCIIString {
         let joinedStr = map { $0.stringValue }.joined()
         let joinedData = Data(map { $0.rawData }.joined())
-        return ASCIIString(guaranteedASCII: joinedStr,
-                           rawData: joinedData)
+        return ASCIIString(
+            guaranteedASCII: joinedStr,
+            rawData: joinedData
+        )
     }
     
     /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
@@ -184,10 +186,14 @@ extension Sequence where Element == ASCIIString {
     public func joined(separator: ASCIIString) -> ASCIIString {
         let joinedStr = map { $0.stringValue }
             .joined(separator: separator.stringValue)
-        let joinedData = Data(map { $0.rawData }
-            .joined(separator: separator.rawData))
-        return ASCIIString(guaranteedASCII: joinedStr,
-                           rawData: joinedData)
+        let joinedData = Data(
+            map { $0.rawData }
+                .joined(separator: separator.rawData)
+        )
+        return ASCIIString(
+            guaranteedASCII: joinedStr,
+            rawData: joinedData
+        )
     }
 }
 
@@ -197,7 +203,7 @@ extension ASCIIString {
     /// Internal use only.
     /// Used when string and data are already known to be valid ASCII.
     internal init(guaranteedASCII string: String, rawData: Data) {
-        self.stringValue = string
+        stringValue = string
         self.rawData = rawData
     }
 }

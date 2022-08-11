@@ -4,7 +4,6 @@
 import PackageDescription
 
 let package = Package(
-    
     name: "SwiftASCII",
     
     platforms: [.macOS(.v10_11), .iOS(.v9), .tvOS(.v9), .watchOS(.v2)],
@@ -12,7 +11,8 @@ let package = Package(
     products: [
         .library(
             name: "SwiftASCII",
-            targets: ["SwiftASCII"])
+            targets: ["SwiftASCII"]
+        )
     ],
     
     dependencies: [
@@ -22,12 +22,13 @@ let package = Package(
     targets: [
         .target(
             name: "SwiftASCII",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "SwiftASCIITests",
-            dependencies: ["SwiftASCII"])
+            dependencies: ["SwiftASCII"]
+        )
     ]
-    
 )
 
 func addShouldTestFlag() {

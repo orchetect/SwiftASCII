@@ -27,8 +27,8 @@ public struct ASCIICharacter: Hashable {
             return nil
         }
         
-        self.characterValue = source
-        self.asciiValue = getASCIIValue
+        characterValue = source
+        asciiValue = getASCIIValue
     }
     
     /// Returns a new `ASCIICharacter` instance from the source character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
@@ -40,14 +40,14 @@ public struct ASCIICharacter: Hashable {
             var translated = String(lossy).asciiStringLossy
             if translated.stringValue.isEmpty { translated = "?" }
             
-            self.characterValue = Character(translated.stringValue)
-            self.asciiValue = characterValue.asciiValue ?? 0x3F
+            characterValue = Character(translated.stringValue)
+            asciiValue = characterValue.asciiValue ?? 0x3F
             
             return
         }
         
-        self.characterValue = lossy
-        self.asciiValue = getASCIIValue
+        characterValue = lossy
+        asciiValue = getASCIIValue
     }
     
     /// Returns a new `ASCIICharacter` instance if the source string contains a single character and the character is a valid ASCII character.
@@ -62,8 +62,8 @@ public struct ASCIICharacter: Hashable {
             return nil
         }
         
-        self.characterValue = char
-        self.asciiValue = getASCIIValue
+        characterValue = char
+        asciiValue = getASCIIValue
     }
     
     /// Returns a new `ASCIICharacter` instance if the source string contains a single character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
@@ -88,8 +88,8 @@ public struct ASCIICharacter: Hashable {
             return nil
         }
         
-        self.characterValue = Character(scalar)
-        self.asciiValue = UInt8(ascii: scalar)
+        characterValue = Character(scalar)
+        asciiValue = UInt8(ascii: scalar)
     }
     
     /// Returns a new `ASCIICharacter` instance from an ASCII character number.
