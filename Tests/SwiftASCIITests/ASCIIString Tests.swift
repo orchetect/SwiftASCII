@@ -1,6 +1,7 @@
 //
 //  ASCIIString Tests.swift
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
