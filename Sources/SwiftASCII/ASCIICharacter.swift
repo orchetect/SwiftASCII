@@ -1,14 +1,15 @@
 //
 //  ASCIICharacter.swift
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2021-2024 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// ASCII Character:
 /// A type containing a `Character` instance that is guaranteed to conform to ASCII encoding.
-/// Offers a validating `exactly: Character` failable initializer and a `_ lossy: Character` conversion initializer.
+/// Offers a validating `exactly: Character` failable initializer and a `_ lossy: Character`
+/// conversion initializer.
 public struct ASCIICharacter: Hashable {
     /// The ASCII character returned as a `Character`
     public let characterValue: Character
@@ -32,11 +33,13 @@ public struct ASCIICharacter: Hashable {
         asciiValue = getASCIIValue
     }
     
-    /// Returns a new `ASCIICharacter` instance from the source character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
+    /// Returns a new `ASCIICharacter` instance from the source character, converting a non-ASCII
+    /// character to its closest ASCII equivalent if necessary.
     @inlinable
     public init(_ lossy: Character) {
         guard let getASCIIValue = lossy.asciiValue else {
-            // if ASCII encoding fails, fall back to a default character instead of throwing an exception
+            // if ASCII encoding fails, fall back to a default character instead of throwing an
+            // exception
             
             var translated = String(lossy).asciiStringLossy
             if translated.stringValue.isEmpty { translated = "?" }
@@ -51,7 +54,8 @@ public struct ASCIICharacter: Hashable {
         asciiValue = getASCIIValue
     }
     
-    /// Returns a new `ASCIICharacter` instance if the source string contains a single character and the character is a valid ASCII character.
+    /// Returns a new `ASCIICharacter` instance if the source string contains a single character and
+    /// the character is a valid ASCII character.
     @_disfavoredOverload
     @inlinable
     public init?<S: StringProtocol>(exactly source: S) {
@@ -67,7 +71,8 @@ public struct ASCIICharacter: Hashable {
         asciiValue = getASCIIValue
     }
     
-    /// Returns a new `ASCIICharacter` instance if the source string contains a single character, converting a non-ASCII character to its closest ASCII equivalent if necessary.
+    /// Returns a new `ASCIICharacter` instance if the source string contains a single character,
+    /// converting a non-ASCII character to its closest ASCII equivalent if necessary.
     @inlinable
     public init<S: StringProtocol>(_ lossy: S) {
         let char: Character = lossy.first ?? "?"
@@ -76,7 +81,8 @@ public struct ASCIICharacter: Hashable {
     }
     
     /// Returns a new `ASCIICharacter` instance if the source data is a single ASCII character.
-    /// Returns `nil` if the source data is not a single byte or if it contains a non-ASCII character byte.
+    /// Returns `nil` if the source data is not a single byte or if it contains a non-ASCII
+    /// character byte.
     @inlinable
     public init?(exactly source: Data) {
         guard source.count == 1 else { return nil }
@@ -113,7 +119,8 @@ extension ASCIICharacter: ExpressibleByExtendedGraphemeClusterLiteral {
 
 extension ASCIICharacter: CustomStringConvertible {
     public var description: String {
-        // If not a printable character, return an empty string and don't allow any non-printable ASCII control characters through
+        // If not a printable character, return an empty string and don't allow any non-printable
+        // ASCII control characters through
         
         (32 ... 126).contains(asciiValue)
             ? String(characterValue)
@@ -234,7 +241,8 @@ extension Sequence where Element == ASCIICharacter {
         ASCIIString(self)
     }
     
-    /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
+    /// Returns a new string by concatenating the elements of the sequence, adding the given
+    /// separator between each element.
     public func joined(separator: ASCIIString) -> ASCIIString {
         let joinedStr = map { "\($0.characterValue)" }
             .joined(separator: separator.stringValue)

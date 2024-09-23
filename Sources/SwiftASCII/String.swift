@@ -1,7 +1,7 @@
 //
 //  String.swift
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2021-2024 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -36,11 +36,14 @@ extension StringProtocol {
     
     /// Converts a `String` to `ASCIIString` lossily.
     ///
-    /// Performs a lossy conversion, transforming characters to printable ASCII substitutions where necessary.
+    /// Performs a lossy conversion, transforming characters to printable ASCII substitutions where
+    /// necessary.
     ///
-    /// Note that some characters may be transformed to representations that occupy more than one ASCII character. For example: char 189 (½) will be converted to "1/2"
+    /// Note that some characters may be transformed to representations that occupy more than one
+    /// ASCII character. For example: char 189 (½) will be converted to "1/2"
     ///
-    /// Where a suitable character substitution can't reasonably be performed, a question-mark "?" will be substituted.
+    /// Where a suitable character substitution can't reasonably be performed, a question-mark "?"
+    /// will be substituted.
     @available(OSX 10.11, iOS 9.0, *)
     public var asciiStringLossy: ASCIIString {
         let transformed = applyingTransform(

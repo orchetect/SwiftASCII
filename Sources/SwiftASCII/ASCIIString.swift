@@ -1,14 +1,15 @@
 //
 //  ASCIIString.swift
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2021-2024 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// ASCII String:
 /// A type containing a `String` instance that is guaranteed to conform to ASCII encoding.
-/// Offers a validating `exactly: String` failable initializer and a `_ lossy: String` conversion initializer.
+/// Offers a validating `exactly: String` failable initializer and a `_ lossy: String` conversion
+/// initializer.
 public struct ASCIIString: Hashable {
     /// The ASCII string returned as a `String`
     public let stringValue: String
@@ -40,13 +41,15 @@ public struct ASCIIString: Hashable {
         rawData = source
     }
     
-    /// Returns a new `ASCIIString` instance from the source string, removing or converting any non-ASCII characters if necessary.
+    /// Returns a new `ASCIIString` instance from the source string, removing or converting any
+    /// non-ASCII characters if necessary.
     @inlinable
     public init<S: StringProtocol>(_ lossy: S) {
         guard lossy.allSatisfy({ $0.isASCII }),
               let asciiData = lossy.data(using: .ascii)
         else {
-            // if ASCII encoding fails, fall back to a default string instead of throwing an exception
+            // if ASCII encoding fails, fall back to a default string instead of throwing an
+            // exception
             
             stringValue = lossy.asciiStringLossy.stringValue
             rawData = stringValue.data(using: .ascii) ?? Data([])
@@ -182,7 +185,8 @@ extension Sequence where Element == ASCIIString {
         )
     }
     
-    /// Returns a new string by concatenating the elements of the sequence, adding the given separator between each element.
+    /// Returns a new string by concatenating the elements of the sequence, adding the given
+    /// separator between each element.
     @_disfavoredOverload
     public func joined(separator: ASCIIString) -> ASCIIString {
         let joinedStr = map { $0.stringValue }
@@ -203,7 +207,7 @@ extension Sequence where Element == ASCIIString {
 extension ASCIIString {
     /// Internal use only.
     /// Used when string and data are already known to be valid ASCII.
-    internal init(guaranteedASCII string: String, rawData: Data) {
+    init(guaranteedASCII string: String, rawData: Data) {
         stringValue = string
         self.rawData = rawData
     }

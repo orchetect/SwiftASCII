@@ -1,11 +1,11 @@
 //
 //  String Tests.swift
 //  SwiftASCII • https://github.com/orchetect/SwiftASCII
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2021-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 import SwiftASCII
+import XCTest
 
 class StringTests: XCTestCase {
     override func setUp() { super.setUp() }
