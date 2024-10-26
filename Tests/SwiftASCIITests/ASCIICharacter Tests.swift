@@ -4,115 +4,105 @@
 //  © 2021-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import SwiftASCII
-import XCTest
+import Testing
 
-class ASCIICharacterTests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testInit_exactly_Character() {
-        // init(exactly: Character)
+@Suite struct ASCIICharacterTests {
+    @Test("init(exactly: Character)") func init_exactly_Character() {
+        #expect(ASCIICharacter(exactly: Character("A"))?.characterValue == "A")
+        #expect(ASCIICharacter(exactly: "A")?.characterValue == "A")
         
-        XCTAssertEqual(ASCIICharacter(exactly: Character("A"))?.characterValue, "A")
-        XCTAssertEqual(ASCIICharacter(exactly: "A")?.characterValue, "A")
-        
-        XCTAssertNil(ASCIICharacter(exactly: "😃"))
-        XCTAssertNil(ASCIICharacter(exactly: "Ä"))
+        #expect(ASCIICharacter(exactly: "😃") == nil)
+        #expect(ASCIICharacter(exactly: "Ä") == nil)
     }
     
-    func testInit_exactly_String() {
-        // init(exactly: StringProtocol)
-        
-        XCTAssertNil(ASCIICharacter(exactly: "A string"))
+    @Test("init(exactly: StringProtocol)") func init_exactly_StringProtocol() {
+        #expect(ASCIICharacter(exactly: "A string") == nil)
     }
     
-    func testInit_exactly_Data() {
-        // init(BinaryInteger)
-        
-        XCTAssertEqual(ASCIICharacter(exactly: Data([65])), "A")
+    @Test("init(BinaryInteger)") func init_exactly_Data() {
+        #expect(ASCIICharacter(exactly: Data([65])) == "A")
         
         // non-printable ASCII chars
-        XCTAssertEqual(ASCIICharacter(exactly: Data([0]))?.asciiValue, 0)
+        #expect(ASCIICharacter(exactly: Data([0]))?.asciiValue == 0)
         
         // non-ASCII char numbers
-        XCTAssertNil(ASCIICharacter(exactly: Data([128]))) // extended ASCII
+        #expect(ASCIICharacter(exactly: Data([128])) == nil) // extended ASCII
     }
     
-    func testInit_BinaryInteger() {
-        // init(BinaryInteger)
-        
-        XCTAssertEqual(ASCIICharacter(65), "A")
+    @Test("init(BinaryInteger)") func init_BinaryInteger() {
+        #expect(ASCIICharacter(65) == "A")
         
         // non-printable ASCII chars
-        XCTAssertEqual(ASCIICharacter(0)?.asciiValue, 0)
+        #expect(ASCIICharacter(0)?.asciiValue == 0)
         
         // non-ASCII char numbers
-        XCTAssertNil(ASCIICharacter(128)) // extended ASCII
-        XCTAssertNil(ASCIICharacter(300)) // out of bounds
+        #expect(ASCIICharacter(128) == nil) // extended ASCII
+        #expect(ASCIICharacter(300) == nil) // out of bounds
     }
     
-    func testasciiValue() {
-        XCTAssertEqual(ASCIICharacter(65)?.asciiValue, 65)
+    @Test("asciiValue") func asciiValue() {
+        #expect(ASCIICharacter(65)?.asciiValue == 65)
         
         // non-printable ASCII chars
-        XCTAssertEqual(ASCIICharacter(0)?.asciiValue, 0)
+        #expect(ASCIICharacter(0)?.asciiValue == 0)
         
         // non-ASCII char numbers
-        XCTAssertNil(ASCIICharacter(128)?.asciiValue) // extended ASCII
-        XCTAssertNil(ASCIICharacter(300)?.asciiValue) // out of bounds
+        #expect(ASCIICharacter(128)?.asciiValue == nil) // extended ASCII
+        #expect(ASCIICharacter(300)?.asciiValue == nil) // out of bounds
     }
     
-    func testRawData() {
-        XCTAssertEqual(ASCIICharacter(65)?.rawData, Data([65]))
+    @Test("rawData") func rawData() {
+        #expect(ASCIICharacter(65)?.rawData == Data([65]))
         
         // non-printable ASCII chars
-        XCTAssertEqual(ASCIICharacter(0)?.rawData, Data([0]))
+        #expect(ASCIICharacter(0)?.rawData == Data([0]))
         
         // non-ASCII char numbers
-        XCTAssertNil(ASCIICharacter(128)?.rawData) // extended ASCII
-        XCTAssertNil(ASCIICharacter(300)?.rawData) // out of bounds
+        #expect(ASCIICharacter(128)?.rawData == nil) // extended ASCII
+        #expect(ASCIICharacter(300)?.rawData == nil) // out of bounds
     }
     
-    func testCustomStringConvertible() {
-        XCTAssertEqual(String(describing: ASCIICharacter(65)!), "A")
+    @Test("CustomStringConvertible") func customStringConvertible() {
+        #expect(String(describing: ASCIICharacter(65)!) == "A")
         
         // non-printable ASCII chars
-        XCTAssertEqual(String(describing: ASCIICharacter(0)!), "?")
+        #expect(String(describing: ASCIICharacter(0)!) == "?")
     }
     
-    func testCustomDebugStringConvertible() {
-        XCTAssertEqual(
-            ASCIICharacter(65)!.debugDescription,
+    @Test("CustomDebugStringConvertible") func customDebugStringConvertible() {
+        #expect(
+            ASCIICharacter(65)!.debugDescription ==
             #"ASCIICharacter(#65: "A")"#
         )
         
         // non-printable ASCII chars
-        XCTAssertEqual(
-            ASCIICharacter(0)!.debugDescription,
+        #expect(
+            ASCIICharacter(0)!.debugDescription ==
             #"ASCIICharacter(#0: "?")"#
         )
     }
     
-    func testEquatable() {
+    @Test("Equatable") func equatable() {
         // Self & Self
         
-        XCTAssertTrue(ASCIICharacter("A") == ASCIICharacter("A"))
-        XCTAssertFalse(ASCIICharacter("A") != ASCIICharacter("A"))
+        #expect(ASCIICharacter("A") == ASCIICharacter("A"))
+        #expect((ASCIICharacter("A") != ASCIICharacter("A")) == false)
         
-        XCTAssertTrue(ASCIICharacter("A") == ASCIICharacter("A"))
-        XCTAssertFalse(ASCIICharacter("A") != ASCIICharacter("A"))
+        #expect(ASCIICharacter("A") == ASCIICharacter("A"))
+        #expect((ASCIICharacter("A") != ASCIICharacter("A")) == false)
         
         // Self & Character
         
-        XCTAssertTrue(ASCIICharacter("A") == Character("A"))
-        XCTAssertFalse(ASCIICharacter("A") != Character("A"))
+        #expect(ASCIICharacter("A") == Character("A"))
+        #expect((ASCIICharacter("A") != Character("A")) == false)
         
-        XCTAssertTrue(Character("A") == ASCIICharacter("A"))
-        XCTAssertFalse(Character("A") != ASCIICharacter("A"))
+        #expect(Character("A") == ASCIICharacter("A"))
+        #expect((Character("A") != ASCIICharacter("A")) == false)
     }
     
-    func testCodable() throws {
+    @Test("Codable") func codable() throws {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
         
@@ -121,13 +111,13 @@ class ASCIICharacterTests: XCTestCase {
         let encoded = try encoder.encode(str)
         let decoded = try decoder.decode(ASCIICharacter.self, from: encoded)
         
-        XCTAssertEqual(str, decoded)
+        #expect(str == decoded)
     }
     
-    func testStaticInits() {
+    @Test("Static Constructors") func staticConstructors() {
         let str: ASCIICharacter = .lossy("😃")
         
-        XCTAssertEqual(str.characterValue, Character("?"))
+        #expect(str.characterValue == Character("?"))
         
         let _: [ASCIICharacter] = [
             .lossy("A"),
@@ -150,36 +140,36 @@ class ASCIICharacterTests: XCTestCase {
         ]
     }
     
-    func testInterpolation() {
-        XCTAssertEqual(
-            ASCIICharacter("A") + ASCIICharacter("B"),
+    @Test("String Interpolation") func interpolation() {
+        #expect(
+            ASCIICharacter("A") + ASCIICharacter("B") ==
             ASCIIString("AB")
         )
         
-        XCTAssertEqual(
-            ASCIICharacter("A") + ASCIIString("BC"),
+        #expect(
+            ASCIICharacter("A") + ASCIIString("BC") ==
             ASCIIString("ABC")
         )
         
-        XCTAssertEqual(
-            ASCIIString("AB") + ASCIICharacter("C"),
+        #expect(
+            ASCIIString("AB") + ASCIICharacter("C") ==
             ASCIIString("ABC")
         )
     }
     
-    func testJoined() {
-        XCTAssertEqual(
-            [ASCIICharacter("A"), ASCIICharacter("B")].joined(),
+    @Test("joined()") func joined() {
+        #expect(
+            [ASCIICharacter("A"), ASCIICharacter("B")].joined() ==
             ASCIIString("AB")
         )
         
-        XCTAssertEqual(
-            [ASCIICharacter("A"), ASCIICharacter("B")].joined(separator: "_"),
+        #expect(
+            [ASCIICharacter("A"), ASCIICharacter("B")].joined(separator: "_") ==
             ASCIIString("A_B")
         )
         
-        XCTAssertEqual(
-            [ASCIICharacter("A"), ASCIICharacter("B")].joined(separator: "123"),
+        #expect(
+            [ASCIICharacter("A"), ASCIICharacter("B")].joined(separator: "123") ==
             ASCIIString("A123B")
         )
     }
