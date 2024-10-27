@@ -253,7 +253,7 @@ extension Sequence where Element == ASCIICharacter {
                 .joined(separator: separator.rawData)
         )
         return ASCIIString(
-            guaranteedASCII: joinedStr,
+            unsafe: joinedStr,
             rawData: joinedData
         )
     }

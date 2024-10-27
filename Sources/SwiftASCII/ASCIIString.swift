@@ -182,7 +182,7 @@ extension Sequence where Element == ASCIIString {
         let joinedStr = map { $0.stringValue }.joined()
         let joinedData = Data(map { $0.rawData }.joined())
         return ASCIIString(
-            guaranteedASCII: joinedStr,
+            unsafe: joinedStr,
             rawData: joinedData
         )
     }
@@ -198,7 +198,7 @@ extension Sequence where Element == ASCIIString {
                 .joined(separator: separator.rawData)
         )
         return ASCIIString(
-            guaranteedASCII: joinedStr,
+            unsafe: joinedStr,
             rawData: joinedData
         )
     }
@@ -208,8 +208,8 @@ extension Sequence where Element == ASCIIString {
 
 extension ASCIIString {
     /// Internal use only.
-    /// Used when string and data are already known to be valid ASCII.
-    init(guaranteedASCII string: String, rawData: Data) {
+    /// Used when the input string and data are guaranteed to be valid ASCII.
+    init(unsafe string: String, rawData: Data) {
         stringValue = string
         self.rawData = rawData
     }
