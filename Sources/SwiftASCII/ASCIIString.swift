@@ -150,6 +150,8 @@ extension ASCIIString: Codable {
     }
 }
 
+extension ASCIIString: Sendable { }
+
 extension ASCIIString {
     public static func + (lhs: ASCIIString, rhs: ASCIIString) -> ASCIIString {
         ASCIIString([lhs, rhs])

@@ -188,6 +188,8 @@ extension ASCIICharacter: Codable {
     }
 }
 
+extension ASCIICharacter: Sendable { }
+
 extension ASCIICharacter {
     public static func + (lhs: ASCIICharacter, rhs: ASCIICharacter) -> ASCIIString {
         ASCIIString([lhs, rhs])
