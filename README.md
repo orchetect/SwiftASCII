@@ -1,6 +1,6 @@
 # SwiftASCII
 
-[![CI Build Status](https://github.com/orchetect/SwiftASCII/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/SwiftASCII/actions/workflows/build.yml) [![Platforms - macOS 10.11+ | iOS 9+ | tvOS 9+ | watchOS 2+ | visionOS 1+](https://img.shields.io/badge/platforms-macOS%2010.11+%20|%20iOS%209+%20|%20tvOS%209+%20|%20watchOS%202+%20|%20visionOS%201+-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.3-6.0](https://img.shields.io/badge/Swift-5.3–6.0-orange.svg?style=flat) [![Xcode 13-16](https://img.shields.io/badge/Xcode-13–16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftASCII/blob/main/LICENSE)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FSwiftASCII%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/SwiftASCII) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FSwiftASCII%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/SwiftASCII) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftASCII/blob/main/LICENSE)
 
 `ASCIIString` and `ASCIICharacter` types for Swift offering validation and lossy conversion from `String`.
 
@@ -8,21 +8,18 @@ Complete unit test coverage.
 
 ## Getting Started
 
-### Swift Package Manager (SPM)
+1. SwiftASCII is available as a Swift Package that can be added as a dependency in your app or package.
 
-1. Add SwiftASCII as a dependency using Swift Package Manager.
+   - In an Xcode app project or framework add the package dependency to your target using this URL:
 
-   - In an app project or framework, in Xcode:
-
-     - Select the menu: **File → Swift Packages → Add Package Dependency...**
-     - Enter this URL: `https://github.com/orchetect/SwiftASCII`
-
+     `https://github.com/orchetect/SwiftASCII`
+     
    - In a Swift Package, add it to the Package.swift dependencies:
-
+   
      ```swift
-     .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.0")
+     .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.5")
      ```
-
+   
 2. Import the library:
 
    ```swift
