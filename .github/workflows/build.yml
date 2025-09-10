@@ -178,8 +178,8 @@ jobs:
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=watchOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   linux:
-    name: linux
-    runs-on: ubuntu-latests
+    name: Linux
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
     - name: Build
