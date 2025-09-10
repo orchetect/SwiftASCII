@@ -46,7 +46,12 @@ extension StringProtocol {
     /// will be substituted.
     @available(OSX 10.11, iOS 9.0, *)
     public var asciiStringLossy: ASCIIString {
-        let transformed = applyingTransform(
+#if canImport(Darwin)
+        let this = self
+#else
+        let this = String(self) as NSString
+#endif
+        let transformed = this.applyingTransform(
             StringTransform("Latin-ASCII"),
             reverse: false
         )
