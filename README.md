@@ -1,6 +1,6 @@
 # swift-ascii
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-ascii%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-ascii) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FSwiftASCII%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-ascii) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-ascii/blob/main/LICENSE)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-ascii%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/swift-ascii) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2Fswift-ascii%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/swift-ascii) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/swift-ascii/blob/main/LICENSE)
 
 Introduces `ASCIIString` and `ASCIICharacter` types for Swift offering validation and lossy conversion from `String`.
 
@@ -19,7 +19,7 @@ To add this package to a Swift package, add the dependency to your package and t
 ```swift
 let package = Package(
     dependencies: [
-        .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.0")
+        .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.1")
     ],
     targets: [
         .target(
