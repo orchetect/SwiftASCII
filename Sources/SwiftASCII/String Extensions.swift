@@ -1,7 +1,7 @@
 //
 //  String Extensions.swift
 //  swift-ascii • https://github.com/orchetect/swift-ascii
-//  © 2021-2025 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -33,7 +33,7 @@ extension StringProtocol {
     public var asciiString: ASCIIString? {
         ASCIIString(exactly: self)
     }
-    
+
     /// Converts a `String` to `ASCIIString` lossily.
     ///
     /// Performs a lossy conversion, transforming characters to printable ASCII substitutions where
@@ -55,10 +55,10 @@ extension StringProtocol {
             StringTransform("Latin-ASCII"),
             reverse: false
         )
-        
+
         let components = (transformed ?? String(self))
             .components(separatedBy: CharacterSet.asciiPrintable.inverted)
-        
+
         return ASCIIString(exactly: components.joined(separator: "?"))
             ?? ASCIIString("")
     }
