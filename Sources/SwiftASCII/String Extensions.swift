@@ -44,15 +44,8 @@ extension StringProtocol {
     ///
     /// Where a suitable character substitution can't reasonably be performed, a question-mark "?"
     /// will be substituted.
-    @available(OSX 10.11, iOS 9.0, *)
+    @inlinable @_disfavoredOverload
     public var asciiStringLossy: ASCIIString {
-        let transformed = String(self)
-            .apply(transform: .latinASCII)
-
-        let components = (transformed ?? String(self))
-            .components(separatedBy: CharacterSet.asciiPrintable.inverted)
-
-        return ASCIIString(exactly: components.joined(separator: "?"))
-            ?? ASCIIString("")
+        ASCIIString(self)
     }
 }

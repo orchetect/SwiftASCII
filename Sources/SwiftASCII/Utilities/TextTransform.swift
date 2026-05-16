@@ -8,6 +8,7 @@ import CoreFoundation
 import Foundation
 
 /// Cross-platform text transformation.
+@usableFromInline
 enum TextTransform: String, Sendable {
     case latinASCII = "Latin-ASCII"
 }
@@ -15,6 +16,7 @@ enum TextTransform: String, Sendable {
 // MARK: - Methods
 
 extension TextTransform {
+    @inlinable
     func apply(
         to source: String,
         reverse: Bool = false
@@ -34,6 +36,7 @@ extension TextTransform {
 // MARK: - String Category Method
 
 extension String {
+    @inlinable
     func apply(
         transform: TextTransform,
         reverse: Bool = false

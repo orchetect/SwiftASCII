@@ -45,19 +45,32 @@ public struct ASCIIString {
     /// non-ASCII characters if necessary.
     @inlinable
     public init<S: StringProtocol>(_ lossy: S) {
-        guard lossy.allSatisfy(\.isASCII),
-              let asciiData = lossy.data(using: .ascii)
-        else {
+        if lossy.allSatisfy(\.isASCII),
+           let asciiData = lossy.data(using: .ascii)
+        {
+            stringValue = String(lossy)
+            rawData = asciiData
+            return
+        } else {
             // if ASCII encoding fails, fall back to a default string instead of throwing an
             // exception
 
-            stringValue = lossy.asciiStringLossy.stringValue
-            rawData = stringValue.data(using: .ascii) ?? Data([])
-            return
+            let transformed = String(lossy)
+                .apply(transform: .latinASCII)
+            
+            let components = (transformed ?? String(lossy))
+                .components(separatedBy: CharacterSet.asciiPrintable.inverted)
+            
+            let joined = components.joined(separator: "?")
+            
+            if let str = ASCIIString(exactly: joined) {
+                self = str
+                return
+            } else {
+                stringValue = ""
+                rawData = Data()
+            }
         }
-
-        stringValue = String(lossy)
-        rawData = asciiData
     }
 
     /// Returns a new `ASCIIString` instance from a `ASCIICharacter` sequence.
