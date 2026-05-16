@@ -1,6 +1,6 @@
 //
 //  CFString Utilities.swift
-//  swift-ascii • https://github.com/orchetect/swift-ascii
+//  SwiftASCII • https://github.com/orchetect/swift-ascii
 //  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
@@ -13,7 +13,7 @@ extension String {
         let ns = NSMutableString(string: self)
         return unsafeBitCast(ns, to: CFMutableString.self)
     }
-    
+
     @inline(__always)
     func toCFString() -> CFString {
         let ns = self as NSString

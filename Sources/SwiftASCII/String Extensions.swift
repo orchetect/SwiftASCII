@@ -1,6 +1,6 @@
 //
 //  String Extensions.swift
-//  swift-ascii • https://github.com/orchetect/swift-ascii
+//  SwiftASCII • https://github.com/orchetect/swift-ascii
 //  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
