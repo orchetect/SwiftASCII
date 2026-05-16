@@ -55,9 +55,20 @@ public struct ASCIIString {
             // if ASCII encoding fails, fall back to a default string instead of throwing an
             // exception
 
-            let transformed = String(lossy)
-                .apply(transform: .latinASCII)
-            
+            #if canImport(Darwin)
+            let this = lossy
+            #else
+            let this = String(lossy) as NSString
+            #endif
+            let transformed = this.applyingTransform(
+                StringTransform("Latin-ASCII"),
+                reverse: false
+            )
+
+            // alternate method:
+            // let transformed = String(lossy)
+            //     .apply(transform: .latinASCII)
+
             let components = (transformed ?? String(lossy))
                 .components(separatedBy: CharacterSet.asciiPrintable.inverted)
             
